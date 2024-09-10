@@ -1,0 +1,27 @@
+replicaCount: 1
+
+image:
+  repository: landoop/schema-registry-ui
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8088
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  host: schema-registry-ui.kubernetes.docker.internal
+  tlsSecretName: tls
+
+env:
+  - name: SCHEMAREGISTRY_URL
+    value: "http://confluentinc-kafka-cp-schema-registry.infra:8081"
+  - name: PROXY
+    value: "true"
+  - name: ALLOW_GLOBAL
+    value: "1"
+  - name: ALLOW_TRANSITIVE
+    value: "1"
+  - name: ALLOW_DELETION
+    value: "1"
